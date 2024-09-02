@@ -21,7 +21,7 @@ const Search = () => {
         throw new Error("Pokemon not found");
       }
       const data = await response.json();
-      
+
       setPokemon({
         name: data.name,
         img: data.sprites.other["official-artwork"].front_default,
@@ -36,7 +36,7 @@ const Search = () => {
   };
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-lime-400">
+    <main className="min-h-screen flex flex-col items-center justify-center gap-3 bg-lime-400">
       <form onClick={handleSearch}>
         <input
           className="py-2 px-14 mt-10 rounded-lg mr-5 text-center"
