@@ -2,12 +2,15 @@ import { useEffect, useState } from "react";
 import Cards from "../../components/Cards/Cards";
 import Buttons from "../../components/Buttons/Buttons";
 import { TiArrowLeftOutline, TiArrowRightOutline } from "react-icons/ti";
+import Loading from "../../components/Loading/Loading";
 
 const Home = () => {
   const [pokemon, setPokemon] = useState([]);
   const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false)
 
   const getEvolutions = async (id) => {
+    setLoading(true)
     const response = await fetch(
       `https://pokeapi.co/api/v2/evolution-chain/${id}/`
     );
@@ -37,6 +40,7 @@ const Home = () => {
       );
     }
     setPokemon(evolutions);
+    setLoading(false)
   };
 
   useEffect(() => {
@@ -62,6 +66,9 @@ const Home = () => {
 
         <div className="flex justify-evenly mt-10 w-full">
           <Buttons icon={<TiArrowLeftOutline />} handleClick={prevClick} />
+            {loading && (
+              <Loading />
+            )}
           <Buttons icon={<TiArrowRightOutline />} handleClick={nextClick} />
         </div>
       </div>
