@@ -1,16 +1,19 @@
 import { useState } from "react";
 import Cards from "../../components/Cards/Cards";
+import Loading from "../../components/Loading/Loading";
 
 const Search = () => {
   const [search, setSearch] = useState("");
   const [pokemon, setPokemon] = useState(null);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false)
 
   const handleSearch = async (e) => {
     e.preventDefault();
     setError("");
-
+    
     try {
+      setLoading(true)
       const response = await fetch(
         `https://pokeapi.co/api/v2/pokemon/${search.toLowerCase()}/`
       );
@@ -18,16 +21,17 @@ const Search = () => {
         throw new Error("Pokemon not found");
       }
       const data = await response.json();
-      console.log(data);
-
+      
       setPokemon({
         name: data.name,
         img: data.sprites.other["official-artwork"].front_default,
         id: data.id,
       });
+      setLoading(false)
     } catch (error) {
       setError(error.message);
       setPokemon(null);
+      setLoading(false)
     }
   };
 
@@ -48,6 +52,9 @@ const Search = () => {
           Search
         </button>
       </form>
+      {loading && (
+        <Loading />
+      )}
       {pokemon && (
         <Cards
           key={pokemon.id}
