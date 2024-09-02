@@ -1,19 +1,20 @@
 import { useState } from "react";
 import Cards from "../../components/Cards/Cards";
 import Loading from "../../components/Loading/Loading";
+import { Link } from "react-router-dom";
 
 const Search = () => {
   const [search, setSearch] = useState("");
   const [pokemon, setPokemon] = useState(null);
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const handleSearch = async (e) => {
     e.preventDefault();
     setError("");
-    
+
     try {
-      setLoading(true)
+      setLoading(true);
       const response = await fetch(
         `https://pokeapi.co/api/v2/pokemon/${search.toLowerCase()}/`
       );
@@ -27,11 +28,11 @@ const Search = () => {
         img: data.sprites.other["official-artwork"].front_default,
         id: data.id,
       });
-      setLoading(false)
+      setLoading(false);
     } catch (error) {
       setError(error.message);
       setPokemon(null);
-      setLoading(false)
+      setLoading(false);
     }
   };
 
@@ -52,16 +53,16 @@ const Search = () => {
           Search
         </button>
       </form>
-      {loading && (
-        <Loading />
-      )}
+      {loading && <Loading />}
       {pokemon && (
-        <Cards
-          key={pokemon.id}
-          name={pokemon.name}
-          id={pokemon.id}
-          img={pokemon.img}
-        />
+        <Link key={pokemon.id} to={`/pokemon/${pokemon.id}`}>
+          <Cards
+            key={pokemon.id}
+            name={pokemon.name}
+            id={pokemon.id}
+            img={pokemon.img}
+          />
+        </Link>
       )}
       {error && <div className="mt-10 text-red-500 text-lg">{error}</div>}
     </main>
