@@ -5,7 +5,14 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        customWhite: 'rgba(255, 255, 255, 0.3)',
+      },
+      animation: {
+        spin: "spin 1s linear infinite"
+      }
+    },
   },
   plugins: [],
 }
