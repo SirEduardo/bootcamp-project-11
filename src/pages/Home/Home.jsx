@@ -3,14 +3,15 @@ import Cards from "../../components/Cards/Cards";
 import Buttons from "../../components/Buttons/Buttons";
 import { TiArrowLeftOutline, TiArrowRightOutline } from "react-icons/ti";
 import Loading from "../../components/Loading/Loading";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const [pokemon, setPokemon] = useState([]);
   const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const getEvolutions = async (id) => {
-    setLoading(true)
+    setLoading(true);
     const response = await fetch(
       `https://pokeapi.co/api/v2/evolution-chain/${id}/`
     );
@@ -40,7 +41,7 @@ const Home = () => {
       );
     }
     setPokemon(evolutions);
-    setLoading(false)
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -60,15 +61,15 @@ const Home = () => {
       <div>
         <div className="flex">
           {pokemon.map((p) => (
-            <Cards key={p.id} name={p.name} id={p.id} img={p.img} />
+            <Link key={p.id} to={`/pokemon/${p.id}`}>
+              <Cards key={p.id} name={p.name} id={p.id} img={p.img} />
+            </Link>
           ))}
         </div>
 
         <div className="flex justify-evenly mt-10 w-full">
           <Buttons icon={<TiArrowLeftOutline />} handleClick={prevClick} />
-            {loading && (
-              <Loading />
-            )}
+          {loading && <Loading />}
           <Buttons icon={<TiArrowRightOutline />} handleClick={nextClick} />
         </div>
       </div>
