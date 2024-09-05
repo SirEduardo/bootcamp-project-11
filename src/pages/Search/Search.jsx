@@ -37,10 +37,10 @@ const Search = () => {
   };
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center gap-3 bg-lime-400 max-lg:gap-28">
+    <main className="min-h-screen flex flex-col items-center justify-center gap-3 bg-lime-400 max-lg:gap-28 max-lg:justify-start">
       <form onClick={handleSearch}>
         <input
-          className="py-2 px-14 mt-10 rounded-lg mr-5 text-center"
+          className="py-2 px-14 mt-10 rounded-lg mr-5 text-center max-lg:px-8"
           type="text"
           placeholder="Search Pokemon"
           value={search}
