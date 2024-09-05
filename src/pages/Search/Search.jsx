@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Cards from "../../components/Cards/Cards";
 import Loading from "../../components/Loading/Loading";
 import { Link } from "react-router-dom";
@@ -9,42 +9,52 @@ const Search = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSearch = async (e) => {
-    e.preventDefault();
-    setError("");
 
-    try {
-      setLoading(true);
-      const response = await fetch(
-        `https://pokeapi.co/api/v2/pokemon/${search.toLowerCase()}/`
-      );
-      if (!response.ok) {
-        throw new Error("Pokemon not found");
+    useEffect(() => {
+
+      if (!search) {
+        setPokemon(null)
+        setError("")
+        return
       }
-      const data = await response.json();
 
-      setPokemon({
-        name: data.name,
-        img: data.sprites.other["official-artwork"].front_default,
-        id: data.id,
-      });
-      setLoading(false);
-    } catch (error) {
-      setError(error.message);
-      setPokemon(null);
-      setLoading(false);
-    }
-  };
+      const timer = setTimeout(async () => {
+        setError("")
+        setLoading(true)
+        try {
+          setLoading(true);
+          const response = await fetch(
+            `https://pokeapi.co/api/v2/pokemon/${search.toLowerCase()}/`
+          );
+          if (!response.ok) {
+            throw new Error("Pokemon not found");
+          }
+          const data = await response.json();
+    
+          setPokemon({
+            name: data.name,
+            img: data.sprites.other["official-artwork"].front_default,
+            id: data.id,
+          });
+          setLoading(false);
+        } catch (error) {
+          setError(error.message);
+          setPokemon(null);
+          setLoading(false);
+        }
+      }, 500)
+      return () => clearTimeout(timer) 
+    }, [search])
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center gap-3 bg-lime-400 max-lg:gap-28 max-lg:justify-start">
-      <form onClick={handleSearch}>
+      <form onSubmit={(e) => e.preventDefault()}>
         <input
           className="py-2 px-14 mt-10 rounded-lg mr-5 text-center max-lg:px-8 max-lg:mt-20"
           type="text"
           placeholder="Search Pokemon"
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onInput={(e) => setSearch(e.target.value)}
         />
         <button
           className="bg-red-500 py-2 px-5 text-white rounded-lg"
@@ -64,7 +74,7 @@ const Search = () => {
           />
         </Link>
       )}
-      {error && <div className="mt-10 text-red-500 text-lg">{error}</div>}
+      {search && error && <div className="mt-10 text-red-500 text-lg">{error}</div>}
     </main>
   );
 };
