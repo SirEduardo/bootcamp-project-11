@@ -34,7 +34,7 @@ const PokemonById = () => {
   }, [id]);
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center gap-3 bg-lime-400">
+    <main className="min-h-screen flex flex-col items-center justify-center gap-3 bg-lime-400 max-lg:justify-start max-lg:pt-20">
       <div>
         {pokemon && (
           <Cards
