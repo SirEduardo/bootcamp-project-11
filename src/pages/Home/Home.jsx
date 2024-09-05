@@ -59,7 +59,7 @@ const Home = () => {
   return (
     <main className="min-h-screen flex items-center justify-center bg-lime-400 ">
       <div>
-        <div className="flex">
+        <div className="flex max-lg:flex-col max-lg:mt-20">
           {pokemon.map((p) => (
             <Link key={p.id} to={`/pokemon/${p.id}`}>
               <Cards key={p.id} name={p.name} id={p.id} img={p.img} />
@@ -67,7 +67,7 @@ const Home = () => {
           ))}
         </div>
 
-        <div className="flex justify-evenly mt-10 w-full">
+        <div className="flex justify-between mt-10 w-full max-lg:mb-10 max-lg:justify-between">
           <Buttons icon={<TiArrowLeftOutline />} handleClick={prevClick} />
           {loading && <Loading />}
           <Buttons icon={<TiArrowRightOutline />} handleClick={nextClick} />
