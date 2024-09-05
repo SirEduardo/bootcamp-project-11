@@ -58,7 +58,7 @@ const Home = () => {
 
   return (
     <main className="min-h-screen flex items-center justify-center bg-lime-400 ">
-      <div className="max-lg: flex flex-col-reverse">
+      <div className="max-lg:flex max-lg:flex-col-reverse">
         <div className="flex max-lg:flex-col max-lg:mt-10 max-lg:mb-10">
           {pokemon.map((p) => (
             <Link key={p.id} to={`/pokemon/${p.id}`}>
